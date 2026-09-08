@@ -4885,3 +4885,104 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 }
 .hero-pause { margin-top: 10px; padding: 10px 16px; min-height: 44px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 10px; letter-spacing: .8px; cursor: pointer; }
 .hero-3d-showcase :focus-visible { outline: 2px solid var(--forest); outline-offset: 4px; }
+
+/* Reference-inspired ivory display cases: inset image and raised glass caption. */
+.portfolio { column-gap: 28px; padding: 12px 4px 24px; }
+.work-card {
+  position: relative;
+  isolation: isolate;
+  padding: 30px 12px 18px;
+  margin-bottom: 32px;
+  border-radius: 36px;
+  border: 1px solid #fff9ef;
+  background: linear-gradient(135deg, #fffdf8 0%, #efe2d4 38%, #d6c2b0 76%, #f7eee4 100%);
+  box-shadow: inset 3px 3px 5px #fffefb, inset -4px -5px 8px #b9a28c70,
+    5px 9px 0 -3px #c5b09c, 10px 18px 25px -9px #72563b55, -5px -5px 18px #ffffffb3;
+  overflow: visible;
+}
+.work-card::before {
+  content: '';
+  position: absolute;
+  inset: 9px 5px 5px;
+  border-radius: 31px;
+  border: 1px solid #fff9ed99;
+  pointer-events: none;
+}
+.work-card .photo-button {
+  aspect-ratio: 3 / 4 !important;
+  border-radius: 25px 25px 20px 20px;
+  background: #e5d5c5;
+  box-shadow: 0 0 0 1px #fff8ed, inset 0 3px 12px #654a3455;
+}
+.work-card .photo-button > img { object-fit: cover; }
+.work-card .photo-button::after {
+  padding: 0;
+  border: 1px solid #fff6e4a6;
+  background: linear-gradient(110deg, #fff9ed24, transparent 28%, transparent 75%, #5e3b211a);
+  mask: none;
+  -webkit-mask: none;
+  animation: none;
+}
+.work-card .photo-button::before { box-shadow: inset 2px 3px 7px #674d3440; }
+.work-card .expand { display: none; }
+.work-card .watermark { bottom: 48px; }
+.work-card .card-info {
+  position: relative;
+  z-index: 4;
+  flex: none;
+  min-height: 112px;
+  margin: -30px -2px 0;
+  padding: 23px 78px 20px 21px;
+  justify-content: center;
+  border-radius: 28px;
+  border: 1px solid #fff9ecaa;
+  background: linear-gradient(120deg, #fff8eeed, #dfcebded 57%, #c4ac96e8);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: inset 2px 2px 3px #fffdf5d9, inset -2px -3px 5px #96785c38,
+    0 7px 0 -3px #c4ae99, 0 13px 19px -7px #61463166;
+}
+.work-card .card-meta { display: none; }
+.work-card .card-title-mr { color: #20372c; font-size: 20px; line-height: 1.5; margin: 0 0 3px; }
+.work-card .card-title-en { color: #4c5146; font-size: 13px; line-height: 1.4; margin: 0; }
+.work-card .inquire {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  min-height: 54px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid #ffffff30;
+  background: linear-gradient(145deg, #254b3d, #102e25);
+  box-shadow: inset 1px 2px 3px #ffffff29, 0 4px 7px #473e3233;
+}
+.work-card .inquire-wa-part { display: none; }
+.work-card .inquire-arrow-pod { width: 100%; height: 100%; background: none; box-shadow: none; }
+.work-card .inquire-arrow-pod svg { width: 25px; height: 25px; stroke-width: 1.5; }
+.work-card .inquire:hover .inquire-arrow-pod { background: none; transform: translateX(2px); }
+.work-card .inquire:focus-visible, .work-card .photo-button:focus-visible { outline: 3px solid #173c30; outline-offset: 4px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .work-card:hover { transform: perspective(1000px) translateY(-6px) rotateX(1deg); border-color: #fff9ef; box-shadow: inset 3px 3px 5px #fffefb, inset -4px -5px 8px #b9a28c70, 5px 9px 0 -3px #c5b09c, 12px 24px 32px -9px #72563b66; }
+  .work-card:hover .photo-button { transform: none; }
+}
+@media (max-width: 600px) {
+  .portfolio { column-gap: 16px; }
+  .work-card { padding: 18px 7px 12px; border-radius: 25px; margin-bottom: 24px; }
+  .work-card::before { border-radius: 22px; }
+  .work-card .photo-button { border-radius: 18px; }
+  .work-card .card-info { min-height: 108px; margin: -20px -2px 0; padding: 14px 48px 14px 10px; border-radius: 20px; }
+  .work-card .card-title-mr { font-size: 15px; }
+  .work-card .card-title-en { font-size: 11px; }
+  .work-card .inquire { width: 36px; height: 44px; min-height: 44px; right: 7px; }
+  .work-card .inquire-arrow-pod svg { width: 21px; height: 21px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card, .work-card.priority-item { animation: none; transition: none; }
+  .work-card:hover { transform: none; }
+}
