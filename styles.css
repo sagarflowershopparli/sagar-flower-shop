@@ -4886,7 +4886,7 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 .hero-pause { margin-top: 10px; padding: 10px 16px; min-height: 44px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 10px; letter-spacing: .8px; cursor: pointer; }
 .hero-3d-showcase :focus-visible { outline: 2px solid var(--forest); outline-offset: 4px; }
 
-/* Pastel glass collection — four parts photography, one part caption. */
+/* Static ivory collection — four parts photography, one part caption. */
 .collection { position: relative; isolation: isolate; background: #f8f3eb; }
 .portfolio {
   display: grid;
@@ -4894,36 +4894,6 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
   gap: 28px 18px;
   padding: 28px 4px 40px;
   column-count: auto;
-}
-.portfolio::before, .portfolio::after {
-  content: '';
-  position: absolute;
-  inset: -24px -16px;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 40px;
-  background:
-    radial-gradient(ellipse at 7% 15%, #f0a5beaa 0%, transparent 42%),
-    radial-gradient(ellipse at 92% 45%, #82acc4aa 0%, transparent 43%),
-    radial-gradient(ellipse at 26% 85%, #b9a6d4aa 0%, transparent 40%),
-    radial-gradient(ellipse at 82% 95%, #ffd3adaa 0%, transparent 45%);
-  background-size: 100% 950px;
-  filter: blur(22px);
-  opacity: .85;
-  animation: pastelGlassDrift 18s ease-in-out infinite alternate;
-}
-.portfolio::after {
-  background:
-    radial-gradient(ellipse at 88% 14%, #fac4ae99, transparent 35%),
-    radial-gradient(ellipse at 12% 60%, #89b1ce99, transparent 38%),
-    radial-gradient(ellipse at 76% 90%, #efa5c299, transparent 40%);
-  background-size: 100% 1100px;
-  animation-duration: 24s;
-  animation-direction: alternate-reverse;
-}
-@keyframes pastelGlassDrift {
-  from { transform: translate3d(-5px, -12px, 0); }
-  to { transform: translate3d(5px, 18px, 0); }
 }
 .work-card {
   position: relative;
@@ -4938,8 +4908,6 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
   border-radius: 28px;
   border: 1px solid #fffffff0;
   background: linear-gradient(135deg, #ffffffb8, #ffffff38 40%, #f4f1ed57 65%, #ffffffb3);
-  backdrop-filter: blur(16px) saturate(115%);
-  -webkit-backdrop-filter: blur(16px) saturate(115%);
   box-shadow: inset 2px 2px 3px #fff, inset -2px -3px 5px #fff9,
     0 8px 20px #62577925, 0 2px 4px #ffffffb3;
   overflow: visible;
@@ -4996,8 +4964,6 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
   border-radius: 20px;
   border: 1px solid #fffdf5ed;
   background: linear-gradient(120deg, #fff9eeea, #f1d7c6cf 65%, #f8eadce6);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   box-shadow: inset 1px 2px 4px #fff, inset -1px -2px 4px #fff9, 0 5px 10px #8b6d5030;
 }
 .work-card .card-meta { display: none; }
@@ -5054,6 +5020,6 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
   .work-card:hover .photo-button { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .portfolio::before, .portfolio::after, .work-card.priority-item { animation: none; }
+  .work-card.priority-item { animation: none; }
   .work-card:hover { transform: none; }
 }
