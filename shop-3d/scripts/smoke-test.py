@@ -39,6 +39,13 @@ with sync_playwright() as p:
  page.locator('body').click(position={'x':1190,'y':420});page.keyboard.press('End');page.wait_for_function('window.sagarShopDiagnostics.stop===4')
  mobile.locator('#return-tour').tap();mobile.evaluate("document.querySelector('canvas').getContext('webgl2').getExtension('WEBGL_lose_context').loseContext()");mobile.locator('#catalog').wait_for(state='visible');assert 'paused' in mobile.locator('#fallback-message').inner_text()
  saved=browser.new_page();saved.add_init_script("Object.defineProperty(navigator,'connection',{value:{saveData:true}})");saved.goto(BASE+'/shop-3d/');saved.locator('#enter').click();assert saved.locator('#catalog').is_visible();assert saved.locator('canvas').count()==0
+ # Normal-motion startup catches timestamp/easing errors hidden by reduced-motion tests.
+ motion=browser.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True,device_scale_factor=1,reduced_motion='no-preference');motion.set_default_timeout(60000);monitor(motion)
+ motion.goto(BASE+'/shop-3d/');motion.locator('#enter').tap();motion.wait_for_function('window.sagarShopDiagnostics?.progress > .98');assert motion.evaluate('window.sagarShopDiagnostics.stop')==1
+ client=motion.context.new_cdp_session(motion);client.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':195,'y':600}]})
+ for y in [550,500,450,400,350]: client.send('Input.dispatchTouchEvent',{'type':'touchMove','touchPoints':[{'x':195,'y':y}]})
+ client.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});motion.wait_for_function('window.sagarShopDiagnostics.stop===2')
+ motion.close()
  # Failure of a required asset must reveal the real collection.
  failure=browser.new_page();monitor(failure);failure.route('**/botanical-kit.glb',lambda route:route.abort());failure.goto(BASE+'/shop-3d/');failure.locator('#enter').click();failure.locator('#catalog').wait_for(state='visible');assert failure.locator('#catalog article a').count()==9
  # Main website still contains its original gallery, and loads no WebGL runtime.

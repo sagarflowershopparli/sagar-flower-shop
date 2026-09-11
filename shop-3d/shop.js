@@ -58,7 +58,7 @@ window.addEventListener('resize',resize);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;}else wake();});
 window.addEventListener('pagehide',e=>{cancelAnimationFrame(frame);frame=0;if(!e.persisted)world?.dispose();});window.addEventListener('pageshow',()=>wake());
 function wake(){if(world&&!frame&&!document.hidden&&!catalogOpen){last=performance.now();frame=requestAnimationFrame(tick);}}
-function tick(now){frame=0;if(!world||catalogOpen||document.hidden)return;const dt=Math.min((now-last)/1000,.25);last=now;const blend=reduced?1:1-Math.exp(-dt*4.8);progress+=(destination-progress)*blend;
+function tick(now){frame=0;if(!world||catalogOpen||document.hidden)return;const dt=clamp((now-last)/1000,0,.25);last=now;const blend=reduced?1:1-Math.exp(-dt*4.8);progress+=(destination-progress)*blend;
  const idx=Math.floor(progress),t=progress-idx,a=stops[idx],b=stops[Math.min(idx+1,4)],ease=t*t*(3-2*t);
  const mobile=world.camera.aspect<.7;const positionFor=s=>mobile&&s===stops[1]?[.1,2.25,4.9]:mobile&&s===stops[4]?[.05,2.8,3.1]:s.position;
  goalPosition.set(...positionFor(a)).lerp(new THREE.Vector3(...positionFor(b)),ease);goalLook.set(...a.look).lerp(new THREE.Vector3(...b.look),ease);
