@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ece7dd"><title>Inside Sagar · The 3D Flower Shop</title>
+<meta name="description" content="Step inside Sagar's virtual flower boutique. Explore bouquets, wedding garlands and floral decorations, then enquire on WhatsApp.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="shop.css?v=1">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+<script type="module" src="shop.js?v=1"></script>
+</head>
+<body>
+<main id="experience">
+<div id="viewport" aria-label="Interactive florist boutique. Use the tour buttons or swipe to explore."></div>
+<header class="topbar"><a class="wordmark" href="../"><span>SAGAR</span><small>FLOWER SHOP · PARLI</small></a><div class="top-actions"><button id="browse" type="button">Browse flowers</button><a href="../" aria-label="Exit 3D shop">Exit <span aria-hidden="true">↗</span></a></div></header>
+<section id="welcome" class="welcome">
+<p class="eyebrow">A LITTLE CLOSER TO THE FLOWERS</p><h1>Come in.<br><em>Something beautiful awaits.</em></h1>
+<p class="intro">Open the glass doors. Discover our bouquets,<br class="desktop-break"> traditional garlands & flowers for your celebrations.</p>
+<button id="enter" class="primary" type="button">Enter 3D Shop <span aria-hidden="true">→</span></button>
+<p class="welcome-note">A virtual boutique inspired by Sagar’s floral collection.</p>
+<div id="loading" hidden role="status"><span id="load-message">Preparing your visit…</span><progress id="load-progress" max="100" value="0">0%</progress></div>
+</section>
+<div id="tour" hidden>
+<section class="chapter" aria-live="polite"><p class="eyebrow" id="chapter-number">01 / THE BOUTIQUE</p><h1 id="chapter-title">Welcome to Sagar.</h1><p id="chapter-copy">Scroll or swipe to step through the glass doors.</p></section>
+<div id="hint" class="hint">Select a flower to take a closer look</div>
+<nav class="tour-nav" aria-label="Guided shop tour"><button id="previous" aria-label="Previous display">←</button><div id="stops"></div><button id="next" aria-label="Next display">→</button></nav>
+<button id="quality" class="quality" aria-pressed="false">Quality: Auto</button>
+</div>
+<aside id="product-panel" class="product-panel" aria-label="Selected flower" hidden><button id="close-product" class="close" aria-label="Close product">×</button><p id="product-category" class="eyebrow"></p><h2 id="product-name"></h2><div class="product-actions"><button id="details">View Details</button><a id="order" target="_blank" rel="noopener noreferrer">Order on WhatsApp ↗</a></div></aside>
+<dialog id="details-dialog"><button class="close" id="close-details" aria-label="Close details">×</button><img id="detail-photo" alt=""><div class="detail-copy"><p class="eyebrow">FROM OUR REAL COLLECTION</p><h2 id="detail-title"></h2><p id="detail-description"></p><p class="availability">Made to your colours and occasion. Ask us for availability and a personal quote.</p><a class="primary" id="detail-order" target="_blank" rel="noopener noreferrer">Order on WhatsApp ↗</a></div></dialog>
+<section id="catalog" class="catalog" hidden aria-labelledby="catalog-title"><div class="catalog-heading"><p class="eyebrow">SAGAR · THE COLLECTION</p><h1 id="catalog-title">Find your flowers.</h1><p id="fallback-message">Our real floral work, ready for a closer look.</p><button id="return-tour" type="button">Return to the boutique →</button></div><div id="catalog-items" class="catalog-items"></div></section>
+<noscript><section class="no-script"><h1>Flowers for your moments.</h1><p>The interactive boutique needs JavaScript. Our full photo collection is available on the main website.</p><a href="../#collection">View flower collection →</a></section></noscript>
+</main>
+</body></html>

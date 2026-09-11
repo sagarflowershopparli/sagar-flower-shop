@@ -36,3 +36,7 @@ Run `python3 -m http.server 8000` from this directory and open `http://localhost
 ## Features
 
 Responsive two-column mobile gallery, category filtering, accessible native-dialog lightbox with keyboard and swipe navigation, product-specific WhatsApp links, scroll-aware bottom navigation, passive/rAF scroll updates, reduced-motion support, lazy responsive images, local assets, Florist JSON-LD, Open Graph metadata, and a skip link.
+
+## Optional 3D boutique
+
+The **Enter 3D Shop** invitation opens the modular `shop-3d/` experience. It deploys with the same GitHub Pages branch/root settings and uses the existing portfolio photographs and WhatsApp number. See [shop-3d/README.md](shop-3d/README.md) for content, performance, maintenance and removal instructions.
