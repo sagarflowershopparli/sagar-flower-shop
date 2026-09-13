@@ -1103,3 +1103,24 @@ initElasticBoundaries();
   }
 })();
 
+
+// Scroll parallax only while the hero is on screen; honor motion preferences.
+(() => {
+  const hero = document.querySelector('#home');
+  if (!hero) return;
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let queued = false;
+  function paint() {
+    queued = false;
+    const rect = hero.getBoundingClientRect();
+    const offset = motion.matches ? 0 : Math.max(-16, Math.min(16, -rect.top * 0.045));
+    hero.style.setProperty('--bouquet-parallax', `${offset}px`);
+  }
+  function schedule() {
+    if (!queued) { queued = true; requestAnimationFrame(paint); }
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  motion.addEventListener('change', schedule);
+  paint();
+})();
