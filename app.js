@@ -221,19 +221,19 @@ function initHero3DShowcase() {
   const glider = document.getElementById('heroPaginationGlider');
   const prevBtn = document.getElementById('heroPrevBtn');
   const nextBtn = document.getElementById('heroNextBtn');
-  const morphTurbulence = document.getElementById('morphTurbulence');
-  const morphDisplacement = document.getElementById('morphDisplacement');
   if (!slides.length) return;
 
   let currentIndex = 0;
   let autoplayTimer = null;
   let isPaused = false;
-  let morphAnimFrame = null;
   const ROTATION_MS = 7000;
   let manuallyPaused = false;
   const pauseButton = document.getElementById('heroPauseBtn');
   function syncSlides() {
     slides.forEach((slide, index) => {
+      const offset = (index - currentIndex + slides.length) % slides.length;
+      slide.dataset.position = offset == 0 ? 'front' : offset == 1 ? 'right' : offset == slides.length - 1 ? 'left' : 'back';
+      slide.classList.toggle('active', index === currentIndex);
       slide.inert = index !== currentIndex;
       slide.setAttribute('aria-hidden', String(index !== currentIndex));
     });
@@ -271,27 +271,6 @@ function initHero3DShowcase() {
     if (targetIndex === currentIndex && slides[currentIndex].classList.contains('active')) {
       updateGlider();
       return;
-    }
-
-    const outgoingSlide = slides[currentIndex];
-    const incomingSlide = slides[targetIndex];
-
-    if (outgoingSlide && outgoingSlide !== incomingSlide) {
-      outgoingSlide.classList.remove('active', 'slide-morph-blooming');
-      outgoingSlide.classList.add('slide-morph-out');
-      setTimeout(() => {
-        outgoingSlide.classList.remove('slide-morph-out');
-      }, 480);
-    }
-
-    if (incomingSlide) {
-      incomingSlide.classList.remove('slide-morph-out');
-      incomingSlide.classList.add('slide-morph-in');
-      void incomingSlide.offsetWidth;
-      requestAnimationFrame(() => {
-        incomingSlide.classList.add('active', 'slide-morph-blooming');
-        incomingSlide.classList.remove('slide-morph-in');
-      });
     }
 
     pills.forEach((pill, idx) => {
