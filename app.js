@@ -1124,3 +1124,151 @@ initElasticBoundaries();
   motion.addEventListener('change', schedule);
   paint();
 })();
+
+// Grand Celebration & Vehicle Décor Carousel Controller
+(() => {
+  const root = document.querySelector('#grand-celebration');
+  if (!root) return;
+
+  const slides = [...root.querySelectorAll('[data-veh-slide]')];
+  const pills = [...root.querySelectorAll('[data-veh-to]')];
+  const prevBtn = root.querySelector('#vehPrevBtn');
+  const nextBtn = root.querySelector('#vehNextBtn');
+  const viewport = root.querySelector('#vehViewport');
+  if (!slides.length) return;
+
+  let current = 0;
+  let timer;
+  let isHovered = false;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function render(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === current;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+    });
+    pills.forEach((pill, i) => {
+      const active = i === current;
+      pill.classList.toggle('is-active', active);
+      pill.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  function stop() {
+    if (timer) {
+      clearInterval(timer);
+      timer = undefined;
+    }
+  }
+
+  function start() {
+    stop();
+    if (!reduceMotion.matches && !isHovered) {
+      timer = setInterval(() => {
+        render(current + 1);
+      }, 5500);
+    }
+  }
+
+  // Navigation Arrows
+  prevBtn?.addEventListener('click', () => {
+    render(current - 1);
+    start();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    render(current + 1);
+    start();
+  });
+
+  // Pagination Pills
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      render(Number(pill.dataset.vehTo));
+      start();
+    });
+  });
+
+  // Pause on hover/focus
+  root.addEventListener('mouseenter', () => {
+    isHovered = true;
+    stop();
+  });
+
+  root.addEventListener('mouseleave', () => {
+    isHovered = false;
+    start();
+  });
+
+  root.addEventListener('focusin', () => {
+    isHovered = true;
+    stop();
+  });
+
+  root.addEventListener('focusout', () => {
+    isHovered = false;
+    start();
+  });
+
+  // Touch swipe support
+  let startX = 0;
+  let startY = 0;
+  let isSwiping = false;
+
+  viewport?.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+      stop();
+    }
+  }, { passive: true });
+
+  viewport?.addEventListener('touchmove', (e) => {
+    if (!isSwiping || e.touches.length !== 1) return;
+    const diffX = e.touches[0].clientX - startX;
+    const diffY = e.touches[0].clientY - startY;
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+      if (e.cancelable) e.preventDefault();
+    }
+  }, { passive: false });
+
+  viewport?.addEventListener('touchend', (e) => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    const endX = e.changedTouches[0].clientX;
+    const diffX = endX - startX;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        render(current - 1);
+      } else {
+        render(current + 1);
+      }
+    }
+    start();
+  }, { passive: true });
+
+  // Keyboard navigation
+  viewport?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      render(current - 1);
+      start();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      render(current + 1);
+      start();
+    }
+  });
+
+  reduceMotion.addEventListener?.('change', () => {
+    if (reduceMotion.matches) stop();
+    else start();
+  });
+
+  render(0);
+  start();
+})();
+
