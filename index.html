@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#183A63"><title>Sagar Flower Shop | Garlands, Bouquets & Wedding Décor in Parli</title><meta name="description" content="Flowers for life's beautiful moments. Explore Sagar Flower Shop's wedding garlands, bouquets, floral belts and event decorations in Parli. Enquire on WhatsApp."><link rel="canonical" href="https://sagarflowershopparli.github.io/sagar-flower-shop/"><meta property="og:type" content="website"><meta property="og:title" content="Sagar Flower Shop — Made for your moments"><meta property="og:description" content="Wedding garlands, thoughtful bouquets & beautiful celebrations. Discover our floral portfolio in Parli."><meta property="og:url" content="https://sagarflowershopparli.github.io/sagar-flower-shop/"><meta property="og:image" content="https://sagarflowershopparli.github.io/sagar-flower-shop/assets/videos/delivery-poster.webp"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=diwali-fireworks-3"><link rel="preload" as="image" href="assets/brand/hero/hero-liquid-ring-back.webp" fetchpriority="high"><link rel="preload" as="image" href="assets/brand/hero/hero-red-roses.webp?v=sagar-2" fetchpriority="high"><link rel="preload" as="image" href="assets/brand/hero/hero-varmala.webp"><link rel="preload" as="image" href="assets/videos/delivery-poster.webp"><script src="app.js?v=diwali-fireworks-3" defer></script>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#183A63"><title>Sagar Flower Shop | Garlands, Bouquets & Wedding Décor in Parli</title><meta name="description" content="Flowers for life's beautiful moments. Explore Sagar Flower Shop's wedding garlands, bouquets, floral belts and event decorations in Parli. Enquire on WhatsApp."><link rel="canonical" href="https://sagarflowershopparli.github.io/sagar-flower-shop/"><meta property="og:type" content="website"><meta property="og:title" content="Sagar Flower Shop — Made for your moments"><meta property="og:description" content="Wedding garlands, thoughtful bouquets & beautiful celebrations. Discover our floral portfolio in Parli."><meta property="og:url" content="https://sagarflowershopparli.github.io/sagar-flower-shop/"><meta property="og:image" content="https://sagarflowershopparli.github.io/sagar-flower-shop/assets/videos/delivery-poster.webp"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=diwali-celebration-5"><link rel="preload" as="image" href="assets/brand/hero/hero-liquid-ring-back.webp" fetchpriority="high"><link rel="preload" as="image" href="assets/brand/hero/hero-red-roses-cutout.webp?v=4" fetchpriority="high"><link rel="preload" as="image" href="assets/brand/hero/hero-varmala.webp"><link rel="preload" as="image" href="assets/videos/delivery-poster.webp"><link rel="stylesheet" href="diwali.css?v=diwali-celebration-5"><script src="app.js?v=diwali-celebration-5" defer></script><script src="diwali.js?v=diwali-celebration-5" defer></script>
 <style>
 /* Instant Inlined Cache-Proof Glassmorphism & Minimalist Navbar Styles */
 @media (max-width: 768px) {
@@ -144,8 +144,6 @@
 <section class="hero-3d-showcase diwali-hero" id="home" aria-label="Sagar Flower Shop Signature Showcase" aria-roledescription="carousel">
   <!-- Temporary Diwali celebration: remove this canvas and greeting after the festival. -->
   <canvas class="diwali-fireworks" id="diwaliFireworks" aria-hidden="true"></canvas>
-  <div class="diwali-bloom diwali-bloom-left" aria-hidden="true"></div>
-  <div class="diwali-bloom diwali-bloom-right" aria-hidden="true"></div>
   <div class="diwali-greeting">
     <p class="diwali-kicker">सागर फूल सेंटर <span aria-hidden="true">✦</span> PARLI</p>
     <p class="diwali-wish" lang="mr">दीपावलीच्या हार्दिक शुभेच्छा</p>
@@ -187,12 +185,10 @@
           <div class="hero-liquid-sheen-sweep sheen-back" aria-hidden="true"></div>
 
           <!-- Stationary Subject Showcase (Z-index: 2) -->
-          <img class="hero-subject-img" src="assets/brand/hero/hero-red-roses.webp?v=sagar-2" alt="सागर फूल सेंटरचा लाल गुलाबांचा बुके · Sagar Flower Shop red rose bouquet" width="1024" height="1536" loading="eager" fetchpriority="high" decoding="async">
+          <img class="hero-subject-img" src="assets/brand/hero/hero-red-roses-cutout.webp?v=4" alt="सागर फूल सेंटरचा लाल गुलाबांचा बुके · Sagar Flower Shop red rose bouquet" width="1024" height="1536" loading="eager" fetchpriority="high" decoding="async">
           <div class="hero-subject-shadow" aria-hidden="true"></div>
 
-          <!-- Photorealistic 3D Liquid Chrome Front Layer (Z-index: 3) -->
-          <img class="hero-liquid-layer liquid-layer-front" src="assets/brand/hero/hero-liquid-ring-front.webp" alt="" aria-hidden="true" width="1254" height="1254" decoding="async">
-          <div class="hero-liquid-sheen-sweep sheen-front" aria-hidden="true"></div>
+          <!-- Front liquid layer removed to match other slides (transparent look) -->
         </div>
       </div>
       <div class="hero-slide-content">
@@ -405,7 +401,11 @@
       <span class="pill-title">उरळी व पूजा</span>
     </button>
   </div>
-  <button class="hero-pause" id="heroPauseBtn" type="button" aria-pressed="false">Pause slideshow</button>
+  <div class="hero-playback-controls">
+    <button class="hero-pause" id="heroPauseBtn" type="button" aria-pressed="false">Pause slideshow</button>
+    <span aria-hidden="true">·</span>
+    <button class="hero-pause" id="diwaliPause" type="button" aria-pressed="false" hidden>Pause fireworks</button>
+  </div>
 </section>
 
 <!-- Grand Celebration & Vehicle Décor Carousel Showcase -->

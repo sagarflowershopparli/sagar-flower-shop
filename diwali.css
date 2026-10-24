@@ -1,0 +1,137 @@
+/* ══════════════════════════════════════════════════════════════════
+   Temporary Diwali Celebration — Sagar Flower Shop
+   Remove this file along with diwali.js, the <canvas> & greeting
+   markup after the festival season.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Hero Diwali mode: warm festive gradient background */
+.diwali-hero {
+  isolation: isolate;
+  min-height: 830px;
+  background:
+    radial-gradient(ellipse at 12% 15%, rgba(255, 183, 77, 0.18), transparent 38%),
+    radial-gradient(ellipse at 88% 18%, rgba(212, 175, 55, 0.14), transparent 36%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 152, 56, 0.08), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, #fffdf8 0%, #f7f3ec 72%);
+}
+
+/* Fireworks canvas: absolute overlay, non-interactive */
+.diwali-fireworks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ── Diwali Greeting Typography ── */
+.diwali-greeting {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 760px);
+  text-align: center;
+  pointer-events: none;
+  padding: 4px 16px 0;
+}
+
+/* Thin golden divider line below greeting */
+.diwali-greeting::after {
+  content: '';
+  display: block;
+  width: 90px;
+  height: 1px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.7;
+}
+
+.diwali-kicker {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+.diwali-kicker span {
+  color: var(--gold);
+  padding-inline: 10px;
+}
+
+.diwali-wish {
+  margin: 0;
+  color: var(--forest);
+  font-family: 'Noto Serif Devanagari', Georgia, serif;
+  font-size: clamp(24px, 3.5vw, 43px);
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: 0 2px 18px rgba(255, 253, 248, 0.95);
+  animation: diwaliGoldenPulse 4s ease-in-out infinite alternate;
+}
+
+.diwali-english {
+  margin: 3px 0 0;
+  color: #9b6b54;
+  font-family: Georgia, serif;
+  font-size: clamp(13px, 1.5vw, 18px);
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* Subtle golden text glow animation — CSS-only, GPU-composited */
+@keyframes diwaliGoldenPulse {
+  0%   { text-shadow: 0 2px 18px rgba(255, 253, 248, 0.95); }
+  100% { text-shadow: 0 2px 28px rgba(212, 175, 55, 0.35), 0 0 60px rgba(255, 183, 77, 0.12); }
+}
+
+/* ── Layout overrides for Diwali hero ── */
+.diwali-hero .hero-slides-viewport { min-height: 610px; }
+.diwali-hero .hero-display-type { top: 34px; }
+
+/* ── Playback controls row ── */
+.hero-playback-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+  z-index: 4;
+  color: var(--gold);
+}
+.hero-playback-controls .hero-pause { margin-top: 0; }
+
+/* Pause liquid animations on non-active slides for GPU savings */
+.diwali-hero .hero-slide:not(.active) .hero-liquid-layer,
+.diwali-hero .hero-slide:not(.active) .hero-liquid-sheen-sweep {
+  animation-play-state: paused;
+}
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .diwali-hero {
+    min-height: 780px;
+    padding-top: 20px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+  .diwali-greeting { padding-inline: 8px; }
+  .diwali-greeting::after { margin-top: 10px; }
+  .diwali-kicker { font-size: 8px; letter-spacing: 0.15em; margin-bottom: 5px; }
+  .diwali-kicker span { padding-inline: 6px; }
+  .diwali-wish { font-size: clamp(22px, 5.8vw, 30px); }
+  .diwali-english { font-size: 13px; }
+  .diwali-hero .hero-slides-viewport { min-height: 570px; }
+  .diwali-hero .hero-display-type { top: 38px; }
+}
+
+@media (max-width: 380px) {
+  .diwali-hero { min-height: 750px; }
+  .diwali-hero .hero-slides-viewport { min-height: 550px; }
+  .diwali-hero .hero-display-type { font-size: 18vw; }
+  .hero-playback-controls .hero-pause { padding-inline: 10px; }
+}
+
+/* ── Accessibility: disable fireworks for reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .diwali-fireworks { display: none; }
+  .diwali-wish { animation: none; }
+}
