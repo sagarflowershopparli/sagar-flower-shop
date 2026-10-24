@@ -4891,6 +4891,8 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
   isolation: isolate;
   min-height: 830px;
   background:
+    radial-gradient(ellipse at 3% 40%, rgba(61, 65, 126, .22), transparent 35%),
+    radial-gradient(ellipse at 97% 39%, rgba(96, 60, 124, .18), transparent 35%),
     radial-gradient(ellipse at 15% 20%, rgba(247, 186, 151, .22), transparent 36%),
     radial-gradient(ellipse at 86% 25%, rgba(166, 183, 233, .25), transparent 37%),
     radial-gradient(ellipse at 50% 55%, #fffdf8 0%, #f7f3ec 72%);
@@ -4898,10 +4900,31 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 .diwali-fireworks {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+.diwali-bloom {
+  position: absolute;
+  z-index: 0;
+  top: 32%;
+  width: clamp(190px, 23vw, 330px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .76;
+  background: repeating-conic-gradient(from 4deg, #e84f83 0deg 2.5deg, transparent 2.5deg 11deg, #e7a325 11deg 13.5deg, transparent 13.5deg 22deg, #2ca8d6 22deg 24.5deg, transparent 24.5deg 33deg);
+  -webkit-mask: radial-gradient(circle, transparent 0 24%, #000 29% 32%, transparent 37% 46%, #000 52% 56%, transparent 62%);
+  mask: radial-gradient(circle, transparent 0 24%, #000 29% 32%, transparent 37% 46%, #000 52% 56%, transparent 62%);
+  filter: drop-shadow(0 0 8px rgba(229, 94, 134, .55));
+  animation: diwaliBloom 9s ease-in-out infinite alternate;
+}
+.diwali-bloom-left { left: 5%; }
+.diwali-bloom-right { right: 5%; top: 39%; animation-delay: -4s; transform: rotate(24deg); }
+@keyframes diwaliBloom {
+  from { opacity: .64; rotate: -7deg; scale: .94; }
+  to { opacity: .86; rotate: 7deg; scale: 1.06; }
 }
 .diwali-greeting {
   position: relative;
@@ -4948,6 +4971,9 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 .diwali-hero .hero-display-type { top: 34px; }
 @media (max-width: 768px) {
   .diwali-hero { min-height: 780px; padding-top: 20px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .diwali-bloom { width: 195px; top: 29%; opacity: .68; }
+  .diwali-bloom-left { left: -72px; }
+  .diwali-bloom-right { right: -72px; top: 45%; }
   .diwali-greeting { padding-inline: 8px; }
   .diwali-greeting::after { margin-top: 10px; }
   .diwali-kicker { font-size: 8px; letter-spacing: .15em; margin-bottom: 5px; }
@@ -4964,6 +4990,7 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 }
 @media (prefers-reduced-motion: reduce) {
   .diwali-fireworks { display: none; }
+  .diwali-bloom { animation: none; }
 }
 
 /* Static ivory collection — four parts photography, one part caption. */

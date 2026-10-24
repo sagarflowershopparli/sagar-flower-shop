@@ -8,7 +8,7 @@
   if (!canvas || !hero || !context) return;
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const colors = ['#dc8669', '#e7b65d', '#7397cc', '#ae83bb', '#8eafaa'];
+  const colors = ['#ff587e', '#ffb72f', '#4ccfff', '#a87cff', '#52dab7', '#ff7b38'];
   let width = 0;
   let height = 0;
   let bursts = [];
@@ -30,39 +30,51 @@
   function addBurst() {
     const mobile = width < 769;
     const left = burstSide++ % 2 === 0;
-    const x = width * (mobile ? (left ? .12 : .88) : (left ? .17 : .83)) + (Math.random() - .5) * width * .05;
-    const y = height * (mobile ? .24 : .24) + Math.random() * height * .13;
-    bursts.push({ x, y, born: performance.now(), colorOffset: Math.floor(Math.random() * colors.length), count: mobile ? 20 : 28 });
-    if (bursts.length > 4) bursts.shift();
+    const x = width * (mobile ? (left ? .14 : .86) : (left ? .17 : .83)) + (Math.random() - .5) * width * .04;
+    const y = height * (mobile ? .30 : .29) + Math.random() * height * .15;
+    bursts.push({ x, y, born: performance.now(), colorOffset: Math.floor(Math.random() * colors.length), count: mobile ? 26 : 38 });
+    if (bursts.length > 7) bursts.shift();
   }
 
   function draw(now) {
     context.clearRect(0, 0, width, height);
-    bursts = bursts.filter(burst => now - burst.born < 1750);
+    bursts = bursts.filter(burst => now - burst.born < 2600);
+    context.globalCompositeOperation = 'screen';
     for (const burst of bursts) {
-      const progress = (now - burst.born) / 1750;
-      const radius = (width < 769 ? 58 : 88) * (1 - Math.pow(1 - progress, 2));
-      const alpha = Math.sin(Math.PI * progress) * .9;
+      const progress = (now - burst.born) / 2600;
+      const radius = (width < 769 ? 86 : 150) * (1 - Math.pow(1 - progress, 2.1));
+      const alpha = Math.min(1, progress * 6) * Math.pow(1 - progress, .65);
       context.globalAlpha = alpha;
-      context.lineWidth = 2;
+      context.lineWidth = width < 769 ? 2 : 2.6;
+      context.shadowBlur = width < 769 ? 13 : 20;
       for (let i = 0; i < burst.count; i++) {
         context.strokeStyle = colors[(i + burst.colorOffset) % colors.length];
         context.fillStyle = context.strokeStyle;
+        context.shadowColor = context.strokeStyle;
         const angle = (i / burst.count) * Math.PI * 2;
-        const outerX = burst.x + Math.cos(angle) * radius;
-        const outerY = burst.y + Math.sin(angle) * radius;
-        const innerRadius = radius - (width < 769 ? 9 : 14) * (1 - progress * .45);
+        const lengthFactor = i % 4 === 0 ? .66 : i % 3 === 0 ? .84 : 1;
+        const outerX = burst.x + Math.cos(angle) * radius * lengthFactor;
+        const outerY = burst.y + Math.sin(angle) * radius * lengthFactor + progress * progress * 22;
+        const innerRadius = Math.max(0, radius * lengthFactor - (width < 769 ? 19 : 28) * (1 - progress * .4));
         context.beginPath();
-        context.moveTo(burst.x + Math.cos(angle) * innerRadius, burst.y + Math.sin(angle) * innerRadius);
+        context.moveTo(burst.x + Math.cos(angle) * innerRadius, burst.y + Math.sin(angle) * innerRadius + progress * progress * 22);
         context.lineTo(outerX, outerY);
         context.stroke();
         context.beginPath();
-        context.arc(outerX, outerY, width < 769 ? 1.4 : 1.8, 0, Math.PI * 2);
+        context.arc(outerX, outerY, i % 4 === 0 ? 3 : 2, 0, Math.PI * 2);
         context.fill();
       }
+      context.shadowBlur = 0;
+      context.globalAlpha = alpha * .5;
+      context.strokeStyle = colors[burst.colorOffset];
+      context.lineWidth = 1;
+      context.beginPath();
+      context.arc(burst.x, burst.y + progress * progress * 22, radius * .52, 0, Math.PI * 2);
+      context.stroke();
     }
     context.globalAlpha = 1;
-    if (now - lastBurst > 1150) { addBurst(); lastBurst = now; }
+    context.globalCompositeOperation = 'source-over';
+    if (now - lastBurst > 850) { addBurst(); lastBurst = now; }
     if (visible && !reducedMotion.matches) frame = requestAnimationFrame(draw);
   }
 
@@ -73,6 +85,8 @@
       lastBurst = performance.now();
       addBurst();
       addBurst();
+      bursts[0].born -= 700;
+      bursts[1].born -= 300;
       frame = requestAnimationFrame(draw);
     }
   }
