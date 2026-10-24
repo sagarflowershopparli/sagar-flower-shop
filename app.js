@@ -1,5 +1,95 @@
 'use strict';
 
+// Temporary Diwali fireworks, confined to the hero background.
+(() => {
+  const canvas = document.getElementById('diwaliFireworks');
+  const hero = canvas?.closest('.diwali-hero');
+  const context = canvas?.getContext('2d');
+  if (!canvas || !hero || !context) return;
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const colors = ['#dc8669', '#e7b65d', '#7397cc', '#ae83bb', '#8eafaa'];
+  let width = 0;
+  let height = 0;
+  let bursts = [];
+  let frame = 0;
+  let visible = false;
+  let lastBurst = 0;
+  let burstSide = 0;
+
+  function resize() {
+    const rect = hero.getBoundingClientRect();
+    const ratio = Math.min(devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.round(width * ratio);
+    canvas.height = Math.round(height * ratio);
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function addBurst() {
+    const mobile = width < 769;
+    const left = burstSide++ % 2 === 0;
+    const x = width * (mobile ? (left ? .12 : .88) : (left ? .17 : .83)) + (Math.random() - .5) * width * .05;
+    const y = height * (mobile ? .24 : .24) + Math.random() * height * .13;
+    bursts.push({ x, y, born: performance.now(), colorOffset: Math.floor(Math.random() * colors.length), count: mobile ? 20 : 28 });
+    if (bursts.length > 4) bursts.shift();
+  }
+
+  function draw(now) {
+    context.clearRect(0, 0, width, height);
+    bursts = bursts.filter(burst => now - burst.born < 1750);
+    for (const burst of bursts) {
+      const progress = (now - burst.born) / 1750;
+      const radius = (width < 769 ? 58 : 88) * (1 - Math.pow(1 - progress, 2));
+      const alpha = Math.sin(Math.PI * progress) * .9;
+      context.globalAlpha = alpha;
+      context.lineWidth = 2;
+      for (let i = 0; i < burst.count; i++) {
+        context.strokeStyle = colors[(i + burst.colorOffset) % colors.length];
+        context.fillStyle = context.strokeStyle;
+        const angle = (i / burst.count) * Math.PI * 2;
+        const outerX = burst.x + Math.cos(angle) * radius;
+        const outerY = burst.y + Math.sin(angle) * radius;
+        const innerRadius = radius - (width < 769 ? 9 : 14) * (1 - progress * .45);
+        context.beginPath();
+        context.moveTo(burst.x + Math.cos(angle) * innerRadius, burst.y + Math.sin(angle) * innerRadius);
+        context.lineTo(outerX, outerY);
+        context.stroke();
+        context.beginPath();
+        context.arc(outerX, outerY, width < 769 ? 1.4 : 1.8, 0, Math.PI * 2);
+        context.fill();
+      }
+    }
+    context.globalAlpha = 1;
+    if (now - lastBurst > 1150) { addBurst(); lastBurst = now; }
+    if (visible && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+  }
+
+  function update() {
+    cancelAnimationFrame(frame);
+    context.clearRect(0, 0, width, height);
+    if (visible && !reducedMotion.matches) {
+      lastBurst = performance.now();
+      addBurst();
+      addBurst();
+      frame = requestAnimationFrame(draw);
+    }
+  }
+
+  resize();
+  new ResizeObserver(resize).observe(hero);
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting && !document.hidden;
+    update();
+  }, { threshold: .05 }).observe(hero);
+  document.addEventListener('visibilitychange', () => {
+    visible = !document.hidden && hero.getBoundingClientRect().bottom > 0 && hero.getBoundingClientRect().top < innerHeight;
+    update();
+  });
+  reducedMotion.addEventListener?.('change', update);
+})();
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const motion = matchMedia('(prefers-reduced-motion: reduce)');

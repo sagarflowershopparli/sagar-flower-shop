@@ -4886,6 +4886,86 @@ dialog::backdrop { background: rgba(10, 24, 43, 0.94); }
 .hero-pause { margin-top: 10px; padding: 10px 16px; min-height: 44px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 10px; letter-spacing: .8px; cursor: pointer; }
 .hero-3d-showcase :focus-visible { outline: 2px solid var(--forest); outline-offset: 4px; }
 
+/* Temporary Diwali hero. Remove this block with the greeting and canvas after the festival. */
+.diwali-hero {
+  isolation: isolate;
+  min-height: 830px;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(247, 186, 151, .22), transparent 36%),
+    radial-gradient(ellipse at 86% 25%, rgba(166, 183, 233, .25), transparent 37%),
+    radial-gradient(ellipse at 50% 55%, #fffdf8 0%, #f7f3ec 72%);
+}
+.diwali-fireworks {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.diwali-greeting {
+  position: relative;
+  z-index: 4;
+  width: min(100%, 760px);
+  text-align: center;
+  pointer-events: none;
+  padding: 4px 16px 0;
+}
+.diwali-greeting::after {
+  content: '';
+  display: block;
+  width: 78px;
+  height: 1px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.diwali-kicker {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+}
+.diwali-kicker span { color: var(--gold); padding-inline: 10px; }
+.diwali-wish {
+  margin: 0;
+  color: var(--forest);
+  font-family: 'Noto Serif Devanagari', Georgia, serif;
+  font-size: clamp(24px, 3.5vw, 43px);
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: 0 2px 14px rgba(255, 253, 248, .9);
+}
+.diwali-english {
+  margin: 3px 0 0;
+  color: #9b6b54;
+  font-family: Georgia, serif;
+  font-size: clamp(13px, 1.5vw, 18px);
+  font-style: italic;
+  letter-spacing: .04em;
+}
+.diwali-hero .hero-slides-viewport { min-height: 610px; }
+.diwali-hero .hero-display-type { top: 34px; }
+@media (max-width: 768px) {
+  .diwali-hero { min-height: 780px; padding-top: 20px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .diwali-greeting { padding-inline: 8px; }
+  .diwali-greeting::after { margin-top: 10px; }
+  .diwali-kicker { font-size: 8px; letter-spacing: .15em; margin-bottom: 5px; }
+  .diwali-kicker span { padding-inline: 6px; }
+  .diwali-wish { font-size: clamp(22px, 5.8vw, 30px); }
+  .diwali-english { font-size: 13px; }
+  .diwali-hero .hero-slides-viewport { min-height: 570px; }
+  .diwali-hero .hero-display-type { top: 38px; }
+}
+@media (max-width: 380px) {
+  .diwali-hero { min-height: 750px; }
+  .diwali-hero .hero-slides-viewport { min-height: 550px; }
+  .diwali-hero .hero-display-type { font-size: 18vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diwali-fireworks { display: none; }
+}
+
 /* Static ivory collection — four parts photography, one part caption. */
 .collection { position: relative; isolation: isolate; background: #f8f3eb; }
 .portfolio {
